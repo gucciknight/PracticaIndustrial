@@ -46,7 +46,7 @@ void loop() {
 currentMillis=millis(); 
     webSocketClient.getData(data);    
     if (data.length() > 0) {
-Serial.println(data);
+//Serial.println(data);
     //*************send log data to server in certain interval************************************
  //currentMillis=millis();   
  if (abs(currentMillis - previousMillis) >= interval) {
