@@ -13,7 +13,7 @@ int pinNumber = 0;
 WebSocketClient webSocketClient;
 unsigned long previousMillis = 0;
 unsigned long currentMillis;
-unsigned long interval=300; //interval for sending data to the websocket server in ms
+unsigned long interval=150; //interval for sending data to the websocket server in ms
 // Use WiFiClient class to create TCP connections
 WiFiClient client;
 void setup() {
@@ -36,7 +36,7 @@ void setup() {
   Serial.println("WiFi connected");  
   Serial.println("IP address: ");
   Serial.println(WiFi.localIP());
-  delay(1000);
+  delay(2000);
   
 wsconnect();
 //  wifi_set_sleep_type(LIGHT_SLEEP_T);
