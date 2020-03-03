@@ -2,14 +2,19 @@
 <head>
   <meta charset="utf-8"/>
   <title>Websocket</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
+  <center>
+  <div class="w3-container w3-teal">
+    <h1>Conexión Websocket</h1>
+  </div>
 <input style="width: 800px;height: 200px" type="text" placeholder="enter text here to send to server" id="eingabe" onkeypress="myFunction(event)"/>
-<button onclick="clearlog()">Clear Logs</button>
+<br><button onclick="clearlog()">Clear Logs</button></br>
 <div style="overflow:scroll; width: 800px; height: 550px; border: solid; border-radius: 9px" id="display"></div>
   <script>
   //var sock =new WebSocket("ws://localhost:5001");
-  var sock =new WebSocket("ws://192.168.0.9:3000");  //replace this address with the one the node.js server prints out. keep port 3000
+  var sock =new WebSocket("ws://10.170.53.22:3000");  //replace this address with the one the node.js server prints out. keep port 3000
   var display=document.getElementById("display")
   
   sock.onopen=function(event){
@@ -39,6 +44,6 @@ console.log("empty string not sent")
 function clearlog(){
 display.innerHTML="";
 }
-  </script>
+  </script></center>
 </body>
 </html>

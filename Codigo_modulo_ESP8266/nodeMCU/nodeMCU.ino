@@ -4,9 +4,9 @@
 boolean handshakeFailed=0;
 String data= "";
 char path[] = "/";   //identifier of this device
-const char* ssid     = "Makeit_Lab";
-const char* password = "arduino1234";
-char* host = "192.168.0.9";  //replace this ip address with the ip address of your Node.Js server
+const char* ssid     = "USS_FIT";
+const char* password = "ussfit2019";
+char* host = "10.170.53.22";  //replace this ip address with the ip address of your Node.Js server
 const int espport= 3000;
 int pinNumber = 0;
 
