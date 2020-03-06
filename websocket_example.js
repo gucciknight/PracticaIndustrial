@@ -14,7 +14,8 @@ const server = http.createServer(app);//create a server
 
 function encode_utf8(s) {
   return unescape(encodeURIComponent(s));
-}//***************this snippet gets the local ip of the node.js server. copy this ip to the client side code and add ':3000' *****
+};
+//***************this snippet gets the local ip of the node.js server. copy this ip to the client side code and add ':3000' *****
 //****************exmpl. 192.168.56.1---> var sock =new WebSocket("ws://192.168.56.1:3000");*************************************
 //var sock =new WebSocket("ws://192.168.0.11:3000");
 require('dns').lookup(require('os').hostname(), function (err, add, fam) {
@@ -23,9 +24,8 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 /**********************websocket setup**************************************************************************************/
 //var expressWs = require('express-ws')(app,server);
 const WebSocket = require('ws');
-const s = new WebSocket.Server({ server,
-  deserializer: e => e.data
- });
+const s = new WebSocket.Server({ server});
+s.binaryType = "arraybuffer";
 //when browser sends get request, send html file to browser
 // viewed at http://localhost:30000
 app.get('/', function (req, res) {
@@ -35,16 +35,18 @@ app.get('/', function (req, res) {
 //***************************ws chat server********************************************************************************
 //app.ws('/echo', function(ws, req) {
 s.on('connection', function (ws, req) {
-  /******* when server receives m,esssage from client trigger function with argument message *****/
-   
+  /******* when server receives m,esssage from client trigger function with argument message *****/ 
   ws.on('message', function (message) {
     //let goodmessage = "[" + message + "]";
-    //let utf8message = encode_utf8(goodmessage);
+    typeof message === 'string';
+    message = encode_utf8(message);
     //let json = JSON.stringify(utf8message);
-    let jsonS = JSON.parse(e.data);
+    message = message.trim(); 
+    var object = BSON.deserialize(message);
+    //let jsonS = JSON.parse(JSON.stringify(message));;
     //const output = jsonS.sensor;
-    let newmessage = e.data;
-    console.log("Received: " + newmessage);
+    //let newmessage = e.data;
+    console.log("Received: " + object.sensor);
     s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
       if (client != ws && client.readyState) { //except to the same client (ws) that sent this message
         client.send("broadcast: " + message);
