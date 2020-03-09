@@ -1,6 +1,9 @@
 /**************************websocket_example.js*************************************************/
 var bodyParser = require("body-parser");
 const express = require('express'); //express framework to have a higher level of methods
+const BSON = require('bson');
+var long = BSON.long;
+var jQuery = require('jQuery');
 
 const app = express(); //assign app variable the express class/method
 
@@ -25,6 +28,8 @@ require('dns').lookup(require('os').hostname(), function (err, add, fam) {
 //var expressWs = require('express-ws')(app,server);
 const WebSocket = require('ws');
 const s = new WebSocket.Server({ server});
+
+//onst bson = new BSON();
 s.binaryType = "arraybuffer";
 //when browser sends get request, send html file to browser
 // viewed at http://localhost:30000
@@ -35,18 +40,21 @@ app.get('/', function (req, res) {
 //***************************ws chat server********************************************************************************
 //app.ws('/echo', function(ws, req) {
 s.on('connection', function (ws, req) {
-  /******* when server receives m,esssage from client trigger function with argument message *****/ 
+  /******* when server receives m,esssage from client trigger function with argument message *****/
   ws.on('message', function (message) {
+    //var mess = message;
     //let goodmessage = "[" + message + "]";
-    typeof message === 'string';
-    message = encode_utf8(message);
-    //let json = JSON.stringify(utf8message);
-    message = message.trim(); 
-    var object = BSON.deserialize(message);
-    //let jsonS = JSON.parse(JSON.stringify(message));;
+    //typeof mess === 'string';
+    //message = encode_utf8(message);
+    //message = JSON.stringify(message);
+    //mess = mess.trim();
+    //var mess = bson.deserialize(Buffer.from(message));
+    //let jsonS = JSON.parse(message);
+    //var codes = jQuery.parseJSON(message);
     //const output = jsonS.sensor;
+
     //let newmessage = e.data;
-    console.log("Received: " + object.sensor);
+    console.log("Received: " + message);
     s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
       if (client != ws && client.readyState) { //except to the same client (ws) that sent this message
         client.send("broadcast: " + message);
