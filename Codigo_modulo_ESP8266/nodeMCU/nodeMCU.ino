@@ -4,10 +4,10 @@
 boolean handshakeFailed=0;
 String data= "";
 char path[] = "/";   //identifier of this device
-const char* ssid     = "USS_FIT";
-const char* password = "ussfit2019";
-char* host = "10.170.53.22";  //replace this ip address with the ip address of your Node.Js server
-const int espport= 3000;
+const char* ssid     = "ARRIS-6232";
+const char* password = "BP267U350434";
+char* host = "192.168.0.18";  //replace this ip address with the ip address of your Node.Js server
+const int espport= 8080;
 int pinNumber = 0;
 
 WebSocketClient webSocketClient;
@@ -51,7 +51,7 @@ currentMillis=millis();
  //currentMillis=millis();   
  if (abs(currentMillis - previousMillis) >= interval) {
 previousMillis = currentMillis;
-data= (String) analogRead(A0); //read adc values, this will give random value, since no sensor is connected. 
+data= (int) analogRead(A0); //read adc values, this will give random value, since no sensor is connected. 
 //For this project we are pretending that these random values are sensor values
 webSocketClient.sendData(data);//send sensor data to websocket server
 }
