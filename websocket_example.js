@@ -1,9 +1,9 @@
 /**************************websocket_example.js*************************************************/
+var Chart = require("chart.js");
 var bodyParser = require("body-parser");
 const express = require('express'); //express framework to have a higher level of methods
 const BSON = require('bson');
 var long = BSON.long;
-var jQuery = require('jQuery');
 
 const app = express(); //assign app variable the express class/method
 
@@ -52,8 +52,9 @@ s.on('connection', function (ws, req) {
     //let jsonS = JSON.parse(message);
     //var codes = jQuery.parseJSON(message);
     //const output = jsonS.sensor;
-
     //let newmessage = e.data;
+    message = Math.floor(message);
+    message = message + 2;
     console.log("Received: " + message);
     s.clients.forEach(function (client) { //broadcast incoming message to all clients (s.clients)
       if (client != ws && client.readyState) { //except to the same client (ws) that sent this message
@@ -68,4 +69,4 @@ s.on('connection', function (ws, req) {
   //ws.send("new client connected");
   console.log("new client connected");
 });
-server.listen(3000);
+server.listen(8080);

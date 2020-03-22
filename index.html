@@ -3,9 +3,12 @@
   <meta charset="utf-8"/>
   <title>Websocket</title>
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script>
+  var sock =new WebSocket("ws://localhost:8080");
+</script>
 </head>
 <body>
-
   <div class="w3-container w3-teal">
     <h1>Conexión Websocket</h1>
   </div>
@@ -14,8 +17,8 @@
 <br><button onclick="clearlog()">Clear Logs</button></br>
 <div style="overflow:scroll; width: 800px; height: 550px; border: solid; border-radius: 9px" id="display"></div>
   <script>
-  //var sock =new WebSocket("ws://localhost:5001");
-  var sock =new WebSocket("ws://192.168.0.3:3000");  //replace this address with the one the node.js server prints out. keep port 3000
+
+  //var sock =new WebSocket("ws://192.168.0.3:3000");  //replace this address with the one the node.js server prints out. keep port 3000
   var display=document.getElementById("display")
 
   sock.onopen=function(event){
@@ -24,8 +27,9 @@
   display.innerHTML+="connection succeeded <br />";
   };
   sock.onmessage=function(event){
-  console.log(event);//show received from server data in console of browser
+  console.log(event.data);//show received from server data in console of browser
   display.innerHTML=event.data+"<br />"; //add incoming message from server to the log screen previous string + new string(message)
+  updateChartData(gGauge, event);
  }
 
 function myFunction(event) {
@@ -35,7 +39,7 @@ if(event.keyCode==13){     //when enter is pressed...
   if(text!=""){     //if text is not an empty string
   //display.innerHTML+="From Client: "+text+"<br />"; //show the message from client in div
 sock.send(text);    //send string to server
-display.innerHTML+="<strong>Me: </strong>" + text+"<br />";       //display input text in div (client side)
+display.innerHTML+="<strong>Me: </strong>" + text +"<br />";       //display input text in div (client side)
 document.getElementById('eingabe').value="";     //and clear the input field
 }
 else{
@@ -45,7 +49,40 @@ console.log("empty string not sent")
 function clearlog(){
 display.innerHTML="";
 }
+function updateChartData(chart, data){
+  gGauge.data.datasets.data = [0, data, 0];
+  gGauge.update();
+};
   </script>
+<div><canvas id="bar-chart" width="600" height="400"></canvas></div>
+<script>
+
+// Bar chart
+gGauge = new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {
+      labels: ["","Africa",""],
+      datasets: [
+        {
+          label: "Population (millions)",
+          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+          data: [0,5267,0]
+        }
+      ]
+    },
+    options: {
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+
+</script>
+<script>
+
+</script>
   </center>
 </body>
 </html>
